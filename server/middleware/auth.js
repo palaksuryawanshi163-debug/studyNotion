@@ -1,15 +1,15 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const User = require("../models/User");
+
 
 //auth
 exports.auth = async (req, res, next) => {
   try {
     //extract token
     const token =
-      req.cookies.token ||
-      req.body.token ||
-      req.header("Authorisation").replace("Bearer", "");
+      req.cookies?.token ||
+      req.body?.token ||
+      req.header("Authorization")?.replace("Bearer", "");
 
     //if token missing
     if (!token) {
@@ -41,7 +41,7 @@ exports.auth = async (req, res, next) => {
 //isStudent
 exports.isStudent = async (req, res, next) => {
   try {
-    if (req.user.accountType != "Student") {
+    if (req.user.accountType !== "Student") {
       return res.status(401).json({
         success: false,
         message: "This is protected route for Students",
@@ -59,7 +59,7 @@ exports.isStudent = async (req, res, next) => {
 //isInstructor
 exports.isInstructor = async (req, res, next) => {
   try {
-    if (req.user.accountType != "Instructor") {
+    if (req.user.accountType !== "Instructor") {
       return res.status(401).json({
         success: false,
         message: "This is protected route for Instructor",
@@ -77,7 +77,7 @@ exports.isInstructor = async (req, res, next) => {
 //isAdmin
 exports.isAdmin = async (req, res, next) => {
   try {
-    if (req.user.accountType != "Admin") {
+    if (req.user.accountType !== "Admin") {
       return res.status(401).json({
         success: false,
         message: "This is protected route for Admin",
